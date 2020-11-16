@@ -61,7 +61,7 @@ def evalution_info(request, pokemon):
 def show_pokemon(request, pokemon_id):
     try:
         requested_pokemon = Pokemon.objects.get(id=int(pokemon_id))
-    except ObjectDoesNotExist:
+    except Pokemon.DoesNotExist:
         return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
@@ -69,8 +69,8 @@ def show_pokemon(request, pokemon_id):
     previous_evolution = requested_pokemon.previous_evolution
 
     try:
-        next_evolution = requested_pokemon.forward_evolutions.get()#filter(headline__contains='Lennon')
-    except ObjectDoesNotExist:
+        next_evolution = requested_pokemon.forward_evolutions.get()
+    except Pokemon.DoesNotExist:
         next_evolution = None
 
     pokemon = {
